@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "BackEnd",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 2,
+    "name": "FrontEnd",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 3,
+    "name": "FullStack",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 4,
+    "name": "DevOps",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 5,
+    "name": "BlockChain",
+    "status": "ACTIVE"
+  }
+]
