@@ -6,6 +6,6 @@ public class StartApplication {
     public static void main(String[] args) {
         View view = new View();
         view.start();
-
+        view.start1();
     }
 }
