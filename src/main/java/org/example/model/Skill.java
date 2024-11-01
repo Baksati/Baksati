@@ -49,8 +49,8 @@ public class Skill {
     @Override
     public String toString() {
         return "Skill" + "\n" +
-                "id =" + id + "\n" +
-                "name =" + name + "\n" +
-                "status =" + status + "\n";
+                " id = " + id +
+                " name = " + name +
+                " status = " + status + "\n";
     }
 }

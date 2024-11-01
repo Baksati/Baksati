@@ -19,34 +19,26 @@ public class SkillRepositoryImpl implements SkillRepository {
 
     @Override
     public List<Skill> getAll() {
-        try(FileReader reader = new FileReader(SKILL_PATH)) {
-            Type skillsListType = new TypeToken<List<Skill>>(){}.getType();
-
-            return gson.fromJson(reader, skillsListType);
-        } catch (IOException e) {
-            return new ArrayList<>();
-        }
+        return getSkillsFromJson();
     }
 
     @Override
     public Skill getById(Long id) {
-        for(Skill skill : getAll())
+        for(Skill skill : getSkillsFromJson())
             if (skill.getId().equals(id)) {
                 return skill;
             }
-        return null;
+        return new Skill();
     }
 
     @Override
     public void save(Skill skill) {
-        List<Skill> skills = getAll();
-        skills.add(skill);
-        saveAll(skills);
+        getSkillsFromJson().add(skill);
     }
 
     @Override
     public void update(Skill skill) {
-        List<Skill> skills = getAll();
+        List<Skill> skills = getSkillsFromJson();
         for(int i = 0; i < skills.size(); i ++) {
             if(skills.get(i).getId().equals(skill.getId())) {
                 skills.set(i, skill);
@@ -58,7 +50,7 @@ public class SkillRepositoryImpl implements SkillRepository {
 
     @Override
     public void delete(Long id) {
-        List<Skill> skills = getAll();
+        List<Skill> skills = getSkillsFromJson();
         skills.removeIf(dev -> dev.getId().equals(id));
         saveAll(skills);
     }
@@ -68,6 +60,16 @@ public class SkillRepositoryImpl implements SkillRepository {
             gson.toJson(skills, writer);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private List<Skill> getSkillsFromJson() {
+        try(FileReader reader = new FileReader(SKILL_PATH)) {
+            Type skillsListType = new TypeToken<List<Skill>>(){}.getType();
+
+            return gson.fromJson(reader, skillsListType);
+        } catch (IOException e) {
+            return new ArrayList<>();
         }
     }
 }

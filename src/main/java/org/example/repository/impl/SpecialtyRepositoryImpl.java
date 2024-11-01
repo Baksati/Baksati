@@ -19,34 +19,26 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
 
     @Override
     public List<Specialty> getAll() {
-        try(FileReader reader = new FileReader(SPECIALTY_PATH)) {
-            Type specialtiesListType = new TypeToken<List<Specialty>>(){}.getType();
-
-            return gson.fromJson(reader, specialtiesListType);
-        } catch (IOException e) {
-            return new ArrayList<>();
-        }
+        return getSpecialtyFromJson();
     }
 
     @Override
     public Specialty getById(Long id) {
-        for(Specialty specialty : getAll())
+        for(Specialty specialty : getSpecialtyFromJson())
             if (specialty.getId().equals(id)) {
                 return specialty;
             }
-        return null;
+        return new Specialty();
     }
 
     @Override
     public void save(Specialty specialty) {
-        List<Specialty> specialties = getAll();
-        specialties.add(specialty);
-        saveAll(specialties);
+        getSpecialtyFromJson().add(specialty);
     }
 
     @Override
     public void update(Specialty specialty) {
-        List<Specialty> specialties = getAll();
+        List<Specialty> specialties = getSpecialtyFromJson();
         for(int i = 0; i < specialties.size(); i ++) {
             if(specialties.get(i).getId().equals(specialty.getId())) {
                 specialties.set(i, specialty);
@@ -58,7 +50,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
 
     @Override
     public void delete(Long id) {
-        List<Specialty> specialties = getAll();
+        List<Specialty> specialties = getSpecialtyFromJson();
         specialties.removeIf(dev -> dev.getId().equals(id));
         saveAll(specialties);
     }
@@ -68,6 +60,16 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
             gson.toJson(specialties, writer);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private List<Specialty> getSpecialtyFromJson() {
+        try(FileReader reader = new FileReader(SPECIALTY_PATH)) {
+            Type specialtiesListType = new TypeToken<List<Specialty>>(){}.getType();
+
+            return gson.fromJson(reader, specialtiesListType);
+        } catch (IOException e) {
+            return new ArrayList<>();
         }
     }
 }

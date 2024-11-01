@@ -44,6 +44,10 @@ public class Developer {
         this.firstName = firstName;
     }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public void setSpecialty(Specialty specialty) {
         this.specialty = specialty;
     }
@@ -54,10 +58,6 @@ public class Developer {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     @Override
@@ -75,13 +75,13 @@ public class Developer {
 
     @Override
     public String toString() {
-        return "Developer" + "\n" +
-                "id =" + id + "\n" +
-                "firstName =" + firstName + "\n" +
-                "lastName =" + lastName + "\n" +
-                "status =" + status + "\n" +
-                "specialty =" + specialty + "\n" +
-                "skills =" + skills + "\n";
+        return "\n" + "Developer" +
+                " id = " + id +
+                " firstName = " + firstName +
+                " lastName = " + lastName +
+                " status = " + status +
+                " specialty = " + specialty +
+                " skills = " + skills;
     }
 }
 

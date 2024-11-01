@@ -19,34 +19,27 @@ public class DeveloperRepositoryImpl implements DeveloperRepository {
 
     @Override
     public List<Developer> getAll() {
-        try(FileReader reader = new FileReader(DEVELOPER_PATH)) {
-            Type developersListType = new TypeToken<List<Developer>>(){}.getType();
-
-            return gson.fromJson(reader, developersListType);
-        } catch (IOException e) {
-            return new ArrayList<>();
-        }
+        return getDevelopersFromJson();
     }
 
     @Override
     public Developer getById(Long id) {
-        for(Developer developer : getAll())
+        for(Developer developer : getDevelopersFromJson())
             if (developer.getId().equals(id)) {
                 return developer;
             }
-        return null;
+        return new Developer();
     }
 
     @Override
     public void save(Developer developer) {
-        List<Developer> developers = getAll();
-        developers.add(developer);
-        saveAll(developers);
+        getDevelopersFromJson().add(developer);
     }
 
     @Override
     public void update(Developer developer) {
-        List<Developer> developers = getAll();
+        List<Developer> developers = getDevelopersFromJson();
+
         for(int i = 0; i < developers.size(); i ++) {
             if(developers.get(i).getId().equals(developer.getId())) {
                 developers.set(i, developer);
@@ -58,7 +51,7 @@ public class DeveloperRepositoryImpl implements DeveloperRepository {
 
     @Override
     public void delete(Long id) {
-        List<Developer> developers = getAll();
+        List<Developer> developers = getDevelopersFromJson();
         developers.removeIf(dev -> dev.getId().equals(id));
         saveAll(developers);
     }
@@ -70,4 +63,15 @@ public class DeveloperRepositoryImpl implements DeveloperRepository {
             e.printStackTrace();
         }
     }
+
+    private List<Developer> getDevelopersFromJson() {
+        try(FileReader reader = new FileReader(DEVELOPER_PATH)) {
+            Type developersListType = new TypeToken<List<Developer>>(){}.getType();
+
+            return gson.fromJson(reader, developersListType);
+        } catch (IOException e) {
+            return new ArrayList<>();
+        }
+    }
 }
+

@@ -48,8 +48,8 @@ public class Specialty {
     @Override
     public String toString() {
         return "Specialty" + "\n" +
-                "id =" + id + "\n" +
-                "name =" + name + "\n" +
-                "status =" + status + "\n";
+                " id = " + id +
+                " name = " + name +
+                " status = " + status;
     }
 }
