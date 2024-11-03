@@ -6,8 +6,7 @@ import org.example.controller.SpecialtyController;
 import org.example.model.Developer;
 import org.example.model.Status;
 
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class View {
 
@@ -15,9 +14,6 @@ public class View {
     private final SpecialtyController specialtyController = new SpecialtyController();
     private final SkillController skillController = new SkillController();
     private final Scanner scanner = new Scanner(System.in);
-
-    private static long idCounter = 1;
-
 
     public void start() {
         int input;
@@ -42,13 +38,14 @@ public class View {
                 } catch (NullPointerException e) {  // TODO сделать после задания, обработку ввода текста
                     System.out.println("ID не найден");
                 }
-            }
-
-            else if (input == 4) {
-                scanner.nextLine();
-
+            } else if (input == 4) {
                 System.out.println("Введите имя разработчика: ");
-                String firstName = scanner.nextLine();
+                String firstName = "";
+                do {
+                    firstName = scanner.nextLine();
+                } while (Objects.equals(firstName, ""));
+
+
 
                 System.out.println("Введите фамилию разработчика: ");
                 String lastName = scanner.nextLine();
@@ -56,14 +53,14 @@ public class View {
                 Status status = Status.ACTIVE;
 
                 Developer developer = new Developer();
-                developer.setId(idCounter ++);
                 developer.setFirstName(firstName);
                 developer.setLastName(lastName);
                 developer.setStatus(status);
 
                 developerController.saveDeveloper(developer);
 
-                System.out.println("Новый разработчик добавлен c ID: " + developer.getId() + "\nCтатус: " + status);
+                System.out.println(developer);
+                System.out.println("Разработчик : " + developer.getFirstName() + " , " + developer.getLastName() + " добавлен");
             }
 
         } while (input != 1) ;
