@@ -16,6 +16,8 @@ public class View {
     private final SkillController skillController = new SkillController();
     private final Scanner scanner = new Scanner(System.in);
 
+    private static long idCounter = 1;
+
 
     public void start() {
         int input;
@@ -29,7 +31,6 @@ public class View {
 
             } else if (input == 2) {
                 System.out.println("Текущая коллекция разработчиков: ");
-                scanner.nextLine();
                 System.out.println(developerController.getAllDevelopers());
                 System.out.println();
 
@@ -46,37 +47,23 @@ public class View {
             else if (input == 4) {
                 scanner.nextLine();
 
-                System.out.println("Введите ID разработчика: ");
-                Long id = scanner.nextLong();
-                scanner.nextLine();
-
                 System.out.println("Введите имя разработчика: ");
                 String firstName = scanner.nextLine();
 
                 System.out.println("Введите фамилию разработчика: ");
                 String lastName = scanner.nextLine();
 
-                System.out.println("Введите статус разработчика (ACTIVE или DELETE): ");
-                String statusInput = scanner.nextLine().toUpperCase();
-
-                Status status;
-                if (statusInput.equals("ACTIVE")) {
-                    status = Status.ACTIVE;
-                } else if (statusInput.equals("DELETE")) {
-                    status = Status.DELETE;
-                } else {
-                    System.out.println("Неверный статус. Установлен статус по умолчанию: ACTIVE");
-                    status = Status.ACTIVE;
-                }
+                Status status = Status.ACTIVE;
 
                 Developer developer = new Developer();
-                developer.setId(id);
+                developer.setId(idCounter ++);
                 developer.setFirstName(firstName);
                 developer.setLastName(lastName);
                 developer.setStatus(status);
 
                 developerController.saveDeveloper(developer);
-                System.out.println("Новый разработчик добавлен c ID: " + id + "\nCтатус: " + status);
+
+                System.out.println("Новый разработчик добавлен c ID: " + developer.getId() + "\nCтатус: " + status);
             }
 
         } while (input != 1) ;

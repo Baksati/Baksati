@@ -72,35 +72,5 @@
       "status": "ACTIVE"
     },
     "status": "ACTIVE"
-  },{},{},{},
-  {
-    "firstName": "Петр",
-    "id": 4,
-    "lastName": "Ян"
-  },
-  {
-    "firstName": "Нина",
-    "id": 5,
-    "lastName": "Перова",
-    "skills": [],
-    "specialty": {},
-    "status": "ACTIVE"
-  },{"id":6,"firstName":"Сергей","lastName":"Уров","specialty":{},"skills":[]},{"id":7,"firstName":"Татьяна","lastName":"Белова","status":"ACTIVE","specialty":{},"skills":[]},{"id":8,"firstName":"Елена","lastName":"Подольская","status":"ACTIVE","specialty":{"name":"JavaScript"},"skills":[{"name":"FrontEnd"}]},{"id":9,"firstName":"Полина","lastName":"Лапшина","status":"ACTIVE","specialty":{"id":9,"name":"Swift"},"skills":[{"id":9,"name":"FullStack"}]},{"id":10,"firstName":"Татьяна","lastName":"Березина","status":"ACTIVE","specialty":{"id":10,"name":"Java","status":"ACTIVE"},"skills":[{"id":10,"name":"BackEnd","status":"ACTIVE"}]},
-  {
-    "firstName": "Анатолий",
-    "id": 11,
-    "lastName": "Перов",
-    "skills": [
-      {
-        "id": 11,
-        "name": "BackEnd",
-        "status": "ACTIVE"
-      }
-    ],
-    "specialty": {
-      "id": 11,
-      "name": "Java",
-      "status": "ACTIVE"
-    },
-    "status": "ACTIVE"
-  }]
+  }
+]
