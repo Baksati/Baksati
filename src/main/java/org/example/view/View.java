@@ -6,6 +6,8 @@ import org.example.controller.SpecialtyController;
 import org.example.model.Developer;
 import org.example.model.Status;
 
+import java.io.FileReader;
+import java.nio.file.Path;
 import java.util.*;
 
 public class View {
@@ -45,8 +47,6 @@ public class View {
                     firstName = scanner.nextLine();
                 } while (Objects.equals(firstName, ""));
 
-
-
                 System.out.println("Введите фамилию разработчика: ");
                 String lastName = scanner.nextLine();
 
@@ -61,6 +61,37 @@ public class View {
 
                 System.out.println(developer);
                 System.out.println("Разработчик : " + developer.getFirstName() + " , " + developer.getLastName() + " добавлен");
+
+            } else if (input == 5) {
+                try {
+                    System.out.println("Введите ID разработчика для изменения данных: ");
+                    Long id = scanner.nextLong();
+                    Developer dev = developerController.getDeveloperById(id);
+
+                    if (dev == null) {
+                        System.out.println("Разработчик с таким ID не существует");
+                        return;
+                    }
+                    System.out.println("Введите новое имя разработчика: ");
+                    scanner.nextLine();
+                    String newFirsName = scanner.nextLine();
+
+                    System.out.println("Введите новую фамилию разработчика: ");
+                    String newLastName = scanner.nextLine();
+
+                    if (!newFirsName.isEmpty()) {
+                        dev.setFirstName(newFirsName);
+                    }
+
+                    if (!newLastName.isEmpty()) {
+                        dev.setLastName(newLastName);
+                    }
+
+                    developerController.updateDeveloper(dev);
+                    System.out.println("Данные разработчика изменены: " + dev);
+                } catch (NullPointerException e) {
+                    System.out.println("Ошибка: ID не найден");
+                }
             }
 
         } while (input != 1) ;
