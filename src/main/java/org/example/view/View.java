@@ -15,6 +15,7 @@ public class View {
     private final Scanner scanner = new Scanner(System.in);
 
     // New commit
+    // New commit 2
 
     public void start() {
         int input;
