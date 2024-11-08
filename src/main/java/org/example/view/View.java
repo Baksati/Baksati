@@ -65,6 +65,15 @@ public class View {
 
                 System.out.println("Разработчик : " + developer.getFirstName() + " , " + developer.getLastName() + " добавлен");
 
+            } else if (input == 6) {
+                System.out.println("Введите ID разработчика для удаления");
+                Long id = scanner.nextLong();
+                developerController.deleteDeveloper(id);
+
+            } else if (input == 7) {
+                Developer dev = developerController.getDeveloperById(scanner.nextLong());
+                dev.setStatus(Status.DELETE);
+                developerController.updateDeveloper(dev);
             }
 
         } while (input != 1) ;
@@ -75,7 +84,7 @@ public class View {
         for (String s : Arrays.asList(
                 "Меню", "1. Выход", "2. Вывести всех разработчиков",
                 "3. Вывести разработчика по ID", "4. Добавить разработчика",
-                "5. Изменить разработчика", "6. Удалить разработчика по ID")) {
+                "5. Изменить разработчика", "6. Удалить разработчика по ID", "7. Установить статутс DELETED")) {
             System.out.println(s);
         }
     }
