@@ -4,6 +4,8 @@ import org.example.controller.DeveloperController;
 import org.example.controller.SkillController;
 import org.example.controller.SpecialtyController;
 import org.example.model.Developer;
+import org.example.model.Skill;
+import org.example.model.Specialty;
 import org.example.model.Status;
 import java.util.*;
 
@@ -13,9 +15,6 @@ public class View {
     private final SpecialtyController specialtyController = new SpecialtyController();
     private final SkillController skillController = new SkillController();
     private final Scanner scanner = new Scanner(System.in);
-
-    // New commit
-    // New commit 2
 
     public void start() {
         int input;
@@ -56,10 +55,14 @@ public class View {
                 developer.setFirstName(firstName);
                 developer.setLastName(lastName);
                 developer.setStatus(status);
+                Specialty specialty = specialtyController.getSpecialtyById(1L);
+                List<Skill> skills = new ArrayList<>();
+                skills.add(skillController.getSkillById(1L));
+                developer.setSkills(skills);
+                developer.setSpecialty(specialty);
 
                 developerController.saveDeveloper(developer);
 
-                System.out.println(developer);
                 System.out.println("Разработчик : " + developer.getFirstName() + " , " + developer.getLastName() + " добавлен");
 
             }

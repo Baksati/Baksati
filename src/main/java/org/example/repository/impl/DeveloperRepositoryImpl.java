@@ -7,6 +7,7 @@ import org.example.repository.DeveloperRepository;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -34,8 +35,8 @@ public class DeveloperRepositoryImpl implements DeveloperRepository {
 
     @Override
     public void save(Developer developer) {
-        developer.setId(getLastId() + 1);
         List<Developer> developers = getDevelopersFromJson();
+        developer.setId(getLastId() + 1);
         developers.add(developer);
         saveAll(developers);
     }
@@ -70,8 +71,8 @@ public class DeveloperRepositoryImpl implements DeveloperRepository {
     }
 
     private List<Developer> getDevelopersFromJson() {
-        try(FileReader reader = new FileReader(DEVELOPER_PATH)) {
-            Type developersListType = new TypeToken<List<Developer>>(){}.getType();
+        try(Reader reader = new FileReader(DEVELOPER_PATH)) {
+            Type developersListType = new TypeToken<ArrayList<Developer>>() { }.getType();
 
             return gson.fromJson(reader, developersListType);
         } catch (IOException e) {
@@ -80,16 +81,9 @@ public class DeveloperRepositoryImpl implements DeveloperRepository {
     }
 
     private Long getLastId() {
-        Developer developer = new Developer();
-        List<Developer> developersFromJson = getDevelopersFromJson();
-        if (developersFromJson == null)
-            developer.setId(1L);
-        List<Developer> developers = new ArrayList<>();
-        developers.add(developer);
-        saveAll(developers);
-        if (developersFromJson != null)
-            developer = developersFromJson.get(developersFromJson.size() - 1);
-        return developer.getId();
+        if (getDevelopersFromJson().isEmpty())
+            return 1L;
+        return (long) getDevelopersFromJson().size();
     }
 }
 
