@@ -85,9 +85,8 @@ public class View {
                     dev.setLastName(newLastName);
                 }
 
-                dev.setStatus(Status.ACTIVE);
                 developerController.updateDeveloper(dev);
-                System.out.println("Разработчик изменен: \n" + "Статус установлен по умолчанию: " + Status.ACTIVE);
+                System.out.println("Разработчик изменен");
 
         } else if (input == 6) {
                 System.out.println("Введите ID разработчика для удаления");
@@ -98,16 +97,10 @@ public class View {
             } else if (input == 7) {
                 System.out.println("Введите ID разработчика для установки статуса: ");
                 Developer dev = developerController.getDeveloperById(scanner.nextLong());
-                dev.setStatus(Status.DELETE);
+                dev.setStatus(Status.DELETED);
                 developerController.updateDeveloper(dev);
-                System.out.println("Установлен статус: " + Status.DELETE);
-
-            } else if (input == 8) {
-                System.out.println("Введите ID разработчика для установки статуса: ");
-                Developer dev = developerController.getDeveloperById(scanner.nextLong());
-                dev.setStatus(Status.ACTIVE);
-                developerController.updateDeveloper(dev);
-                System.out.println("Установлен статус: " + Status.ACTIVE);
+                System.out.println("Установлен статус: " + Status.DELETED);
+                // 1 - ACTIVE,  2 - DELETED
             }
 
         } while (input != 1) ;

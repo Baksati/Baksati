@@ -8,9 +8,13 @@ import org.example.repository.SkillRepository;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 public class SkillRepositoryImpl implements SkillRepository {
 
@@ -33,12 +37,16 @@ public class SkillRepositoryImpl implements SkillRepository {
 
     @Override
     public void save(Skill skill) {
-        getSkillsFromJson().add(skill);
+        List<Skill> skills = getSkillsFromJson();
+        skill.setId(getLastId() + 1);
+        skills.add(skill);
+        saveAll(skills);
     }
 
     @Override
     public void update(Skill skill) {
         List<Skill> skills = getSkillsFromJson();
+
         for(int i = 0; i < skills.size(); i ++) {
             if(skills.get(i).getId().equals(skill.getId())) {
                 skills.set(i, skill);
@@ -56,20 +64,27 @@ public class SkillRepositoryImpl implements SkillRepository {
     }
 
     private void saveAll(List<Skill> skills) {
-        try(FileWriter writer = new FileWriter(SKILL_PATH)) {
-            gson.toJson(skills, writer);
+        try {
+            String jsonString = new Gson().toJson(skills);
+            Files.write(Paths.get(SKILL_PATH), jsonString.getBytes());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
     private List<Skill> getSkillsFromJson() {
-        try(FileReader reader = new FileReader(SKILL_PATH)) {
-            Type skillsListType = new TypeToken<List<Skill>>(){}.getType();
+        try(Reader reader = new FileReader(SKILL_PATH)) {
+            Type skillsListType = new TypeToken<ArrayList<Skill>>() { } .getType();
 
             return gson.fromJson(reader, skillsListType);
         } catch (IOException e) {
             return new ArrayList<>();
         }
+    }
+
+    private Long getLastId() {
+        if(getSkillsFromJson().isEmpty())
+            return 1L;
+        return (long) getSkillsFromJson().size();
     }
 }
