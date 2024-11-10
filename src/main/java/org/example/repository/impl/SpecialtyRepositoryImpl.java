@@ -8,7 +8,10 @@ import org.example.repository.SpecialtyRepository;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +36,10 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
 
     @Override
     public void save(Specialty specialty) {
-        getSpecialtyFromJson().add(specialty);
+        List<Specialty> specialties = getSpecialtyFromJson();
+        specialty.setId(getLastId() +1);
+        specialties.add(specialty);
+        saveAll(specialties);
     }
 
     @Override
@@ -56,20 +62,27 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
     }
 
     private void saveAll(List<Specialty> specialties) {
-        try(FileWriter writer = new FileWriter(SPECIALTY_PATH)) {
-            gson.toJson(specialties, writer);
+        try {
+            String jsonString = new Gson().toJson(specialties);
+            Files.write(Paths.get(SPECIALTY_PATH), jsonString.getBytes());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
     private List<Specialty> getSpecialtyFromJson() {
-        try(FileReader reader = new FileReader(SPECIALTY_PATH)) {
-            Type specialtiesListType = new TypeToken<List<Specialty>>(){}.getType();
+        try(Reader reader = new FileReader(SPECIALTY_PATH)) {
+            Type SpecialtiesListType = new TypeToken<ArrayList<Specialty>>() { }.getType();
 
-            return gson.fromJson(reader, specialtiesListType);
+            return gson.fromJson(reader, SpecialtiesListType);
         } catch (IOException e) {
             return new ArrayList<>();
         }
+    }
+
+    private Long getLastId() {
+        if(getSpecialtyFromJson().isEmpty())
+            return 1L;
+        return (long) getSpecialtyFromJson().size();
     }
 }
