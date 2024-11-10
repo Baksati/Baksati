@@ -65,15 +65,49 @@ public class View {
 
                 System.out.println("Разработчик : " + developer.getFirstName() + " , " + developer.getLastName() + " добавлен");
 
-            } else if (input == 6) {
+            } else if (input == 5) {
+                System.out.println("Введите ID разработчика для измений данных");
+                Developer dev = developerController.getDeveloperById(scanner.nextLong());
+
+                scanner.nextLine();
+
+                System.out.println("Введите новое имя разработчика");
+                String newFirstName = scanner.nextLine();
+
+                System.out.println("Введите новую фамилию разработчика");
+                String newLastName = scanner.nextLine();
+
+                if (!newFirstName.isEmpty()) {
+                    dev.setFirstName(newFirstName);
+                }
+
+                if (!newLastName.isEmpty()) {
+                    dev.setLastName(newLastName);
+                }
+
+                dev.setStatus(Status.ACTIVE);
+                developerController.updateDeveloper(dev);
+                System.out.println("Разработчик изменен: \n" + "Статус установлен по умолчанию: " + Status.ACTIVE);
+
+        } else if (input == 6) {
                 System.out.println("Введите ID разработчика для удаления");
                 Long id = scanner.nextLong();
                 developerController.deleteDeveloper(id);
+                System.out.println("Разработчик удален");
 
             } else if (input == 7) {
+                System.out.println("Введите ID разработчика для установки статуса: ");
                 Developer dev = developerController.getDeveloperById(scanner.nextLong());
                 dev.setStatus(Status.DELETE);
                 developerController.updateDeveloper(dev);
+                System.out.println("Установлен статус: " + Status.DELETE);
+
+            } else if (input == 8) {
+                System.out.println("Введите ID разработчика для установки статуса: ");
+                Developer dev = developerController.getDeveloperById(scanner.nextLong());
+                dev.setStatus(Status.ACTIVE);
+                developerController.updateDeveloper(dev);
+                System.out.println("Установлен статус: " + Status.ACTIVE);
             }
 
         } while (input != 1) ;
@@ -84,7 +118,8 @@ public class View {
         for (String s : Arrays.asList(
                 "Меню", "1. Выход", "2. Вывести всех разработчиков",
                 "3. Вывести разработчика по ID", "4. Добавить разработчика",
-                "5. Изменить разработчика", "6. Удалить разработчика по ID", "7. Установить статутс DELETED")) {
+                "5. Изменить разработчика", "6. Удалить разработчика по ID", "7. Установить статутс DELETED",
+                "8. Установить статус ACTIVE")) {
             System.out.println(s);
         }
     }
