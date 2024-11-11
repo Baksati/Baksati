@@ -7,8 +7,6 @@ import org.example.model.Developer;
 import org.example.model.Skill;
 import org.example.model.Specialty;
 import org.example.model.Status;
-
-import javax.lang.model.element.Name;
 import java.util.*;
 
 public class View {
@@ -61,7 +59,8 @@ public class View {
                 developerController.saveDeveloper(developer);
                 skillController.saveSkill(new Skill());
 
-                System.out.println("Разработчик : " + developer.getFirstName() + " , " + developer.getLastName() + " добавлен");
+                System.out.println("Разработчик" + " " + developer.getFirstName() +
+                        " , " + developer.getLastName() + " " + " добавлен");
 
             } else if (input == 5) {
                 System.out.println("Введите ID разработчика для измений данных");
@@ -127,7 +126,7 @@ public class View {
                 skill.setStatus(status);
 
                 skillController.saveSkill(skill);
-                System.out.println("Навык : " + skill.getName() + "добавлен");
+                System.out.println("Навык" + " " + skill.getName() + " " + "добавлен");
 
             } else if (input == 11) {
                 System.out.println("Введите ID навыка для изменения данных");
@@ -157,6 +156,50 @@ public class View {
                 skill.setStatus(Status.DELETED);
                 skillController.updateSkill(skill);
                 System.out.println("Установлен статус: DELETED");
+
+            } else if (input == 14) {
+                System.out.println("Текущая коллекция специальностей: ");
+                System.out.println(specialtyController.getAllSpecialties());
+                System.out.println();
+
+            } else if (input == 15) {
+                try {
+                    System.out.println("Введите ID специальности: ");
+                    Long id = scanner.nextLong();
+                    System.out.println(specialtyController.getSpecialtyById(id));
+                } catch (NullPointerException e) {
+                    System.out.println("ID не найден");
+                }
+                
+            } else if (input == 16) {
+                scanner.nextLine();
+
+                System.out.println("Введите название специальности: ");
+                String name = scanner.nextLine();
+
+                Status status = Status.ACTIVE;
+
+                Specialty specialty = new Specialty();
+                specialty.setName(name);
+                specialty.setStatus(status);
+
+                specialtyController.saveSpecialty(specialty);
+                System.out.println("Навык" + " " + specialty.getName() + " " + "добавлен");
+
+            } else if (input == 17) {
+                System.out.println("Введите ID спецаильность для изменения данных: ");
+                Specialty specialty = specialtyController.getSpecialtyById(scanner.nextLong());
+
+                scanner.nextLine();
+
+                System.out.println("Введите новое название специальности");
+                String newName = scanner.nextLine();
+
+                if(!newName.isEmpty()) {
+                    specialty.setName(newName);
+                }
+                specialtyController.updateSpecialty(specialty);
+                System.out.println("Специальность изменена");
             }
 
         } while (input != 1) ;
@@ -170,7 +213,9 @@ public class View {
                 "5. Изменить разработчика", "6. Удалить разработчика по ID",
                 "7. Установить статутс разработчику DELETED", "8. Вывести все навыки разработчиков",
                 "9. Вывести навыки по ID", "10. Добавить навык", "11. Изменить навык",
-                "12. Удалить навык разработчика по ID", "13. Установить статус навыку DELETED")) {
+                "12. Удалить навык разработчика по ID", "13. Установить статус навыку DELETED",
+                "14. Вывести все специальности разработчиков", "15. Вывести специальности по ID",
+                "16. Добавить специальность", "17. Изменить специальность")) {
             System.out.println(s);
         }
     }
