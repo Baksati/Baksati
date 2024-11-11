@@ -200,6 +200,19 @@ public class View {
                 }
                 specialtyController.updateSpecialty(specialty);
                 System.out.println("Специальность изменена");
+
+            } else if (input == 18) {
+                System.out.println("Введите ID специальности для удаления: ");
+                Long id = scanner.nextLong();
+                specialtyController.deleteSpecialty(id);
+                System.out.println("Специальность удалена");
+
+            } else if (input == 19) {
+                System.out.println("Введите ID разработчика для установки статуса DELETED");
+                Specialty specialty = specialtyController.getSpecialtyById(scanner.nextLong());
+                specialty.setStatus(Status.DELETED);
+                specialtyController.updateSpecialty(specialty);
+                System.out.println("Установлен статус: DELETED");
             }
 
         } while (input != 1) ;
@@ -215,7 +228,8 @@ public class View {
                 "9. Вывести навыки по ID", "10. Добавить навык", "11. Изменить навык",
                 "12. Удалить навык разработчика по ID", "13. Установить статус навыку DELETED",
                 "14. Вывести все специальности разработчиков", "15. Вывести специальности по ID",
-                "16. Добавить специальность", "17. Изменить специальность")) {
+                "16. Добавить специальность", "17. Изменить специальность",
+                "18. Удалить специальность разработчика по ID", "19. Установить статус навыку DELETED")) {
             System.out.println(s);
         }
     }
