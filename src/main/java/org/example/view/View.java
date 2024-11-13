@@ -92,12 +92,26 @@ public class View {
                 System.out.println("Разработчик удален");
 
             } else if (input == 7) {
-                System.out.println("Введите ID разработчика для установки статуса: DELETED");
+                System.out.println("Введите ID разработчика для установки статуса: ");
                 Developer dev = developerController.getDeveloperById(scanner.nextLong());
-                dev.setStatus(Status.DELETED);
-                developerController.updateDeveloper(dev);
-                System.out.println("Установлен статус: DELETED");
-                // 1 - ACTIVE,  2 - DELETED
+                if (dev != null) {
+                    System.out.println("Выберите статус разработчика: ");
+                    System.out.println("1 - ACTIVE");
+                    System.out.println("2 - DELETED");
+
+                    int choice = scanner.nextInt();
+                    if (choice == 1) {
+                        dev.setStatus(Status.ACTIVE);
+                        System.out.println("Установлен статус разработчику: ACTIVE");
+                    } else if (choice == 2) {
+                        dev.setStatus(Status.DELETED);
+                        System.out.println("Установлен статус разработчику: DELETED");
+                    } else {
+                        System.out.println("Ошибка выбора! \nВведите первый или второй вариант");
+                        return;
+                    }
+                    developerController.updateDeveloper(dev);
+                }
 
             } else if (input == 8) {
                 System.out.println("Текущая коллекция навыков: ");
@@ -224,12 +238,13 @@ public class View {
                 "Меню", "1. Выход", "2. Вывести всех разработчиков",
                 "3. Вывести разработчика по ID", "4. Добавить разработчика",
                 "5. Изменить разработчика", "6. Удалить разработчика по ID",
-                "7. Установить статутс разработчику DELETED", "8. Вывести все навыки разработчиков",
+                "7. Установить статус разработчику (ACTIVE, DELETED)", "8. Вывести все навыки разработчиков",
                 "9. Вывести навыки по ID", "10. Добавить навык", "11. Изменить навык",
-                "12. Удалить навык разработчика по ID", "13. Установить статус навыку DELETED",
+                "12. Удалить навык разработчика по ID", "13. Установить статус навыку (ACTIVE, DELETED)",
                 "14. Вывести все специальности разработчиков", "15. Вывести специальности по ID",
                 "16. Добавить специальность", "17. Изменить специальность",
-                "18. Удалить специальность разработчика по ID", "19. Установить статус навыку DELETED")) {
+                "18. Удалить специальность разработчика по ID",
+                "19. Установить статус специальности (ACTIVE, DELETED)")) {
             System.out.println(s);
         }
     }
