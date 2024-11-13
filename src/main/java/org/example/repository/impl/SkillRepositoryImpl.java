@@ -32,7 +32,7 @@ public class SkillRepositoryImpl implements SkillRepository {
             if (skill.getId().equals(id)) {
                 return skill;
             }
-        return new Skill();
+        return null;
     }
 
     @Override

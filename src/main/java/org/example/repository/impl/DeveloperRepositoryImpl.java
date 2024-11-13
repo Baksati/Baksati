@@ -30,7 +30,7 @@ public class DeveloperRepositoryImpl implements DeveloperRepository {
             if (developer.getId().equals(id)) {
                 return developer;
             }
-        return new Developer();
+        return null;
     }
 
     @Override

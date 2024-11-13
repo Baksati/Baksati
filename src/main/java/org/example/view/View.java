@@ -94,12 +94,17 @@ public class View {
             } else if (input == 7) {
                 System.out.println("Введите ID разработчика для установки статуса: ");
                 Developer dev = developerController.getDeveloperById(scanner.nextLong());
-                if (dev != null) {
+                if (dev == null) {
+                    System.out.println("Разработчик с таким ID не найден");
+                    return;
+                }
+
                     System.out.println("Выберите статус разработчика: ");
                     System.out.println("1 - ACTIVE");
                     System.out.println("2 - DELETED");
 
                     int choice = scanner.nextInt();
+
                     if (choice == 1) {
                         dev.setStatus(Status.ACTIVE);
                         System.out.println("Установлен статус разработчику: ACTIVE");
@@ -111,7 +116,6 @@ public class View {
                         return;
                     }
                     developerController.updateDeveloper(dev);
-                }
 
             } else if (input == 8) {
                 System.out.println("Текущая коллекция навыков: ");
@@ -165,11 +169,30 @@ public class View {
                 System.out.println("Навык удален");
 
             } else if (input == 13) {
-                System.out.println("Введите ID разработчика для установки статуса: DELETED");
+                System.out.println("Введите ID навыка для установки статуса: ");
                 Skill skill = skillController.getSkillById(scanner.nextLong());
-                skill.setStatus(Status.DELETED);
+                if (skill == null) {
+                    System.out.println("Навык с таким ID не найден");
+                    return;
+                }
+
+                System.out.println("Выберите статус навыка: ");
+                System.out.println("1 - ACTIVE");
+                System.out.println("2 - DELETED");
+
+                int choice = scanner.nextInt();
+
+                if (choice == 1) {
+                    skill.setStatus(Status.ACTIVE);
+                    System.out.println("Установлен статус навыку: ACTIVE");
+                } else if (choice == 2) {
+                    skill.setStatus(Status.DELETED);
+                    System.out.println("Установлен статус навыку: DELETED");
+                } else {
+                    System.out.println("Ошибка выбора! \nВведите первый или второй вариант");
+                    return;
+                }
                 skillController.updateSkill(skill);
-                System.out.println("Установлен статус: DELETED");
 
             } else if (input == 14) {
                 System.out.println("Текущая коллекция специальностей: ");
@@ -184,7 +207,7 @@ public class View {
                 } catch (NullPointerException e) {
                     System.out.println("ID не найден");
                 }
-                
+
             } else if (input == 16) {
                 scanner.nextLine();
 
@@ -222,11 +245,30 @@ public class View {
                 System.out.println("Специальность удалена");
 
             } else if (input == 19) {
-                System.out.println("Введите ID разработчика для установки статуса DELETED");
-                Specialty specialty = specialtyController.getSpecialtyById(scanner.nextLong());
-                specialty.setStatus(Status.DELETED);
+                System.out.println("Введите ID специальности для установки статуса: ");
+                Specialty specialty = specialtyController.getSpecialtyById(scanner.nextLong())
+                if (specialty == null) {
+                    System.out.println("Специальность с таким ID не найдена");
+                    return;
+                }
+
+                System.out.println("Выберите статус специальности: ");
+                System.out.println("1 - ACTIVE");
+                System.out.println("2 - DELETED");
+
+                int choice = scanner.nextInt();
+
+                if (choice == 1) {
+                    specialty.setStatus(Status.ACTIVE);
+                    System.out.println("Установлен статус специальности: ACTIVE");
+                } else if (choice == 2) {
+                    specialty.setStatus(Status.DELETED);
+                    System.out.println("Установлен статус специальности: DELETED");
+                } else {
+                    System.out.println("Ошибка выбора! \nВведите первый или второй вариант");
+                    return;
+                }
                 specialtyController.updateSpecialty(specialty);
-                System.out.println("Установлен статус: DELETED");
             }
 
         } while (input != 1) ;
