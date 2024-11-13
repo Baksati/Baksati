@@ -246,7 +246,7 @@ public class View {
 
             } else if (input == 19) {
                 System.out.println("Введите ID специальности для установки статуса: ");
-                Specialty specialty = specialtyController.getSpecialtyById(scanner.nextLong())
+                Specialty specialty = specialtyController.getSpecialtyById(scanner.nextLong());
                 if (specialty == null) {
                     System.out.println("Специальность с таким ID не найдена");
                     return;

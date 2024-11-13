@@ -31,7 +31,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
             if (specialty.getId().equals(id)) {
                 return specialty;
             }
-        return new Specialty();
+        return null;
     }
 
     @Override
